@@ -1,0 +1,80 @@
+/**
+ * Стили компонента todo
+*/
+
+.todo-color
+{
+    width: 15px;
+    border: solid 1px rgba(0, 0, 0, 0.03);
+    border-radius: 50%;
+    padding: 2px;
+    background: rgba(0, 0, 0, 0.03);
+}
+
+.todo-button
+{
+    width: 30px;
+    height: 30px;
+    border: solid 1px darkgray;
+
+    &:hover
+    {
+        background: rgba(0, 0, 0, 0.05);
+    }
+
+    &.closed
+    {
+        svg
+        {
+            color: #3f50e7;
+        }
+    }
+
+    svg
+    {
+        color: darkgray;
+    }
+}
+
+.title-cont
+{
+    margin: 0 0 10px 0;
+}
+
+.compact
+{
+    .card
+    {
+        display: flex;
+        flex-direction: row-reverse;
+
+        .card-header
+        {
+            display: flex;
+            align-items: center;
+            width: 25%;
+            padding: 0;
+            margin: 0 10px 0 0;
+        }
+
+        .card-body
+        {
+            width: 75%;
+            display: flex;
+            align-items: center;
+            margin: 0 10px 0 0;
+
+            .title-cont
+            {
+                margin: 0;
+            }
+        }
+
+        .card-body, .card-text, .card-title
+        {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+}
