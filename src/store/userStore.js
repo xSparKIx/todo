@@ -28,6 +28,7 @@ export default {
               displayName: name
             });
             commit("userSet", new User(result.user.uid));
+            localStorage.setItem("user-uid", result.user.uid);
           });
       } catch (error) {
         console.log(error.message);
@@ -47,6 +48,7 @@ export default {
           .signInWithEmailAndPassword(email, password)
           .then(user => {
             commit("userSet", new User(user.user.uid));
+            localStorage.setItem("user-uid", user.user.uid);
           });
       } catch (error) {
         console.log(error.message);
@@ -70,6 +72,7 @@ export default {
     logoutUser({ commit }) {
       firebase.auth().signOut();
       commit("userSet", null);
+      localStorage.removeItem("user-uid");
     }
   },
 

@@ -23,7 +23,6 @@ export default {
       if (user) {
         this.$store.dispatch("logUser", user);
         this.$store.dispatch("loadTodos", user.uid);
-        // this.$router.push("/");
       }
     });
   }

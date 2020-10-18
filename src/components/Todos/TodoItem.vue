@@ -111,6 +111,7 @@ export default {
 <style lang="scss">
 .card {
   border-radius: 10px;
+  overflow: hidden;
 
   .card-header {
     display: flex;
@@ -221,8 +222,6 @@ export default {
 @media (max-width: 768px) {
   .compact {
     .card {
-      overflow: hidden;
-
       .card-header,
       .card-body {
         width: 100%;

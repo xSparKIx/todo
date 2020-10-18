@@ -1,6 +1,4 @@
 import { createRouter, createWebHashHistory } from "vue-router";
-// import store from "../store";
-import firebase from "firebase/app";
 
 const routes = [
   {
@@ -26,21 +24,15 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  // if (to.name == "Todo" && !store.getters.CHECK_USER) next({ name: "Login" });
-  // // else if (store.getters.CHECK_USER) next({ name: "Todo" })
-  // else next();
+  const user = localStorage.getItem("user-uid");
 
-  firebase.auth().onAuthStateChanged(user => {
-    // !user && to.name == "Todo" ? next("/login") : next();
-
-    if (!user && to.name == "Todo") {
-      next("/login");
-    } else if (user && to.name !== "Todo") {
-      next("/");
-    } else {
-      next();
-    }
-  });
+  if (!user && to.name == "Todo") {
+    next("/login");
+  } else if (user && to.name !== "Todo") {
+    next("/");
+  } else {
+    next();
+  }
 });
 
 export default router;
