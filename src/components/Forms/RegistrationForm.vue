@@ -99,7 +99,7 @@
 </template>
 
 <script>
-import "./form.scss";
+import "./assets/styles/form.scss";
 
 export default {
   name: "RegistrationForm",
