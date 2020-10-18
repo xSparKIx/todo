@@ -96,6 +96,11 @@ export default {
       this.$emit("send-todo-info", todo);
     },
 
+    /**
+     * Функция переключения классов
+     * @param {String} cls - переключаемый класс
+     * @returns {Void}
+     */
     toggleClass(cls) {
       event.currentTarget.parentElement.classList.toggle(cls);
     }

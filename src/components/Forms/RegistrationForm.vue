@@ -120,8 +120,11 @@ export default {
   },
 
   computed: {
+    /**
+     * Функция получения статуса валидности
+     * @returns {Boolean} статус валидности
+     */
     isValid() {
-      // При нуле работает некорректно так
       if (
         this.incorrectName === null ||
         this.incorrectEmail === null ||
@@ -166,7 +169,7 @@ export default {
       switch (type) {
         case "text":
           reg = new RegExp(/^[а-яА-Яa-zA-Z0-9]/i);
-          // работает некорректно + добить computed свойство isValid()
+
           if (!val || !reg.test(val)) {
             this.incorrectName = true;
             this.error = "auth/argument-error";

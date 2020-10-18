@@ -103,6 +103,10 @@ export default {
   },
 
   computed: {
+    /**
+     * Функция получения статуса валидности
+     * @returns {Boolean} статус валидности
+     */
     isValid() {
       if (this.incorrectEmail === null || this.incorrectPassword === null)
         return false;
