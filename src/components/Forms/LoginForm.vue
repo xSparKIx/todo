@@ -1,42 +1,61 @@
 <!-- Форма авторизации -->
 
 <template>
-  <div class="form-container p-4 bg-white rounded shadow-sm">
+  <div class="form-container bg-white shadow-sm">
     <h2>Войти</h2>
     <form @submit.prevent="onSubmit">
       <div class="form-group">
-        <label for="exampleInputEmail1">Email</label>
-        <input
-          type="email"
-          v-model="email"
-          class="form-control"
-          :class="[
-            { 'is-invalid': incorrectEmail },
-            !incorrectEmail && incorrectEmail !== null && 'is-valid'
-          ]"
-          id="exampleInputEmail1"
-          aria-describedby="emailHelp"
-        />
+        <label
+          for="exampleInputEmail1"
+          :class="{ 'is-invalid': incorrectEmail }"
+          >E-mail</label
+        >
+        <div
+          :data-tooltip="
+            incorrectEmail ? 'Корректно заполните обязательные поля.' : null
+          "
+        >
+          <input
+            type="email"
+            v-model="email"
+            class="form-control"
+            :class="[
+              { 'is-invalid': incorrectEmail },
+              !incorrectEmail && incorrectEmail !== null && 'is-valid'
+            ]"
+            id="exampleInputEmail1"
+            aria-describedby="emailHelp"
+            @change="onInputChange"
+          />
+        </div>
       </div>
       <div class="form-group">
-        <label for="exampleInputPassword1">Пароль</label>
-        <input
-          type="password"
-          v-model="password"
-          class="form-control"
-          :class="[
-            { 'is-invalid': incorrectPassword },
-            !incorrectPassword && incorrectPassword !== null && 'is-valid'
-          ]"
-          id="exampleInputPassword1"
-        />
+        <label
+          for="exampleInputPassword1"
+          :class="{ 'is-invalid': incorrectPassword }"
+          >Пароль</label
+        >
+        <div
+          :data-tooltip="
+            incorrectPassword
+              ? 'Your password must be at least 6 characters long and must contain letters, numbers and special characters. Cannot contain whitespace.'
+              : null
+          "
+        >
+          <input
+            type="password"
+            v-model="password"
+            class="form-control"
+            :class="[
+              { 'is-invalid': incorrectPassword },
+              !incorrectPassword && incorrectPassword !== null && 'is-valid'
+            ]"
+            id="exampleInputPassword1"
+            @change="onInputChange"
+          />
+        </div>
       </div>
 
-      <small
-        class="d-block text-center my-3 text-danger"
-        v-if="error == 'auth/argument-error'"
-        >Корректно заполните обязательные поля</small
-      >
       <small
         class="d-block text-center my-3 text-danger"
         v-if="error == 'auth/user-not-found'"
@@ -55,28 +74,41 @@
         сбросив свой пароль, или попробовать еще раз позже.</small
       >
 
-      <button type="submit" class="btn btn-primary w-100 bg-gradient">
+      <button type="submit" class="btn btn-primary w-100" :disabled="!isValid">
         Войти
       </button>
     </form>
-    <router-link to="/registration" class="d-block text-center my-2"
-      >или Регистрация</router-link
-    >
+
+    <p>
+      Not a todooist?
+      <router-link to="/registration">Create an account</router-link>
+    </p>
   </div>
 </template>
 
 <script>
+import "./form.scss";
+
 export default {
   name: "LoginForm",
 
   data() {
     return {
       email: null,
-      incorrectEmail: false,
+      incorrectEmail: null,
       password: null,
-      incorrectPassword: false,
+      incorrectPassword: null,
       error: null
     };
+  },
+
+  computed: {
+    isValid() {
+      if (this.incorrectEmail === null || this.incorrectPassword === null)
+        return false;
+
+      return !this.incorrectEmail && !this.incorrectPassword;
+    }
   },
 
   methods: {
@@ -86,47 +118,54 @@ export default {
      * @returns {void}
      */
     onSubmit() {
-      // Объявление регулярных выражений
-      let regEmail = new RegExp(
-          /^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/i
-        ),
-        regPassword = new RegExp(/^[a-zA-Z0-9]/i);
+      const user = {
+        email: this.email,
+        password: this.password
+      };
 
-      // Очистка ошибок
-      this.error = null;
-      this.incorrectEmail = null;
-      this.incorrectPassword = null;
+      this.$store
+        .dispatch("loginUser", user)
+        .then(() => {
+          this.$router.push("/");
+        })
+        .catch(error => {
+          this.error = error.code;
+        });
+    },
 
-      // Проверка email
-      if (!this.email || !regEmail.test(this.email)) {
-        this.incorrectEmail = true;
-        this.error = "auth/argument-error";
-      }
+    onInputChange(event) {
+      let type = event.target.type,
+        val = event.target.value,
+        reg = null;
 
-      // Проверка пароля
-      if (
-        !this.password ||
-        !regPassword.test(this.password) ||
-        this.password.length < 6
-      ) {
-        this.incorrectPassword = true;
-        this.error = "auth/argument-error";
-      }
+      switch (type) {
+        case "email":
+          reg = new RegExp(
+            /^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/i
+          );
 
-      if (!this.error) {
-        const user = {
-          email: this.email,
-          password: this.password
-        };
+          if (!val || !reg.test(val)) {
+            this.incorrectEmail = true;
+            this.error = "auth/argument-error";
+          } else {
+            this.incorrectEmail = false;
+          }
 
-        this.$store
-          .dispatch("loginUser", user)
-          .then(() => {
-            this.$router.push("/");
-          })
-          .catch(error => {
-            this.error = error.code;
-          });
+          break;
+        case "password":
+          reg = new RegExp(/^[a-zA-Z0-9]/i);
+
+          if (!val || !reg.test(val) || val.length < 6) {
+            this.incorrectPassword = true;
+            this.error = "auth/argument-error";
+          } else {
+            this.incorrectPassword = false;
+          }
+
+          break;
+
+        default:
+          break;
       }
     }
   }

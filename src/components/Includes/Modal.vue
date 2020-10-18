@@ -75,7 +75,8 @@
           </button>
           <button
             type="submit"
-            class="btn btn-primary bg-gradient"
+            id="save-changes"
+            class="btn btn-primary"
             data-dismiss="modal"
             @click="saveChanges(todo && todo)"
           >
@@ -137,3 +138,12 @@ export default {
   }
 };
 </script>
+
+<style lang="scss">
+#exampleModal {
+  #save-changes {
+    border: none;
+    background: linear-gradient(90deg, #61de6e 0%, #6df77a 100%);
+  }
+}
+</style>

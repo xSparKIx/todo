@@ -3,23 +3,26 @@
 <template>
   <div
     id="login-form"
-    class="vh-100 d-flex align-items-center justify-content-center"
+    class="vh-100 d-flex align-items-end align-items-md-center justify-content-center form-page"
   >
     <LoginForm />
   </div>
-  <Shapes />
 </template>
 
 <script>
 import LoginForm from "@/components/Forms/LoginForm.vue";
-import Shapes from "@/components/Includes/Shapes.vue";
 
 export default {
   name: "Login",
 
   components: {
-    LoginForm,
-    Shapes
+    LoginForm
   }
 };
 </script>
+
+<style lang="scss">
+.form-page {
+  background: url("../assets/images/bg.png") no-repeat center center;
+}
+</style>

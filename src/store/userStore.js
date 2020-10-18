@@ -1,5 +1,5 @@
 import firebase from "firebase/app";
-import UserHelper from "./Helpers/UserHelper";
+import User from "./Models/User";
 
 export default {
   state: {
@@ -7,7 +7,7 @@ export default {
   },
 
   mutations: {
-    onUserSet(state, uid) {
+    userSet(state, uid) {
       state.user = uid;
     }
   },
@@ -19,24 +19,18 @@ export default {
      * @returns {void}
      */
     async registerUser({ commit }, { name, email, password }) {
-      commit("clearError");
-      commit("setIsLoading", true);
-
       try {
-        const user = await firebase
+        await firebase
           .auth()
           .createUserWithEmailAndPassword(email, password)
           .then(result => {
             result.user.updateProfile({
               displayName: name
             });
+            commit("userSet", new User(result.user.uid));
           });
-
-        commit("onUserSet", new UserHelper(user.user.uid));
-        commit("setIsLoading", false);
       } catch (error) {
-        commit("setIsLoading", false);
-        commit("setIsError", error.message);
+        console.log(error.message);
         throw error;
       }
     },
@@ -47,19 +41,15 @@ export default {
      * @returns  {void}
      */
     async loginUser({ commit }, { email, password }) {
-      commit("clearError");
-      commit("setIsLoading", true);
-
       try {
-        const user = await firebase
+        await firebase
           .auth()
-          .signInWithEmailAndPassword(email, password);
-
-        commit("onUserSet", new UserHelper(user.user.uid));
-        commit("setIsLoading", false);
+          .signInWithEmailAndPassword(email, password)
+          .then(user => {
+            commit("userSet", new User(user.user.uid));
+          });
       } catch (error) {
-        commit("setIsLoading", false);
-        commit("setIsError", error.message);
+        console.log(error.message);
         throw error;
       }
     },
@@ -70,7 +60,7 @@ export default {
      * @returns  {void}
      */
     logUser({ commit }, payload) {
-      commit("onUserSet", new UserHelper(payload.uid));
+      commit("userSet", new User(payload.uid));
     },
 
     /**
@@ -79,7 +69,7 @@ export default {
      */
     logoutUser({ commit }) {
       firebase.auth().signOut();
-      commit("onUserSet", null);
+      commit("userSet", null);
     }
   },
 

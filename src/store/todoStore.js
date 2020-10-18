@@ -1,4 +1,4 @@
-import { db } from "@/components/Includes/fireBaseConfig.js";
+import { db } from "@/config/fireBaseConfig.js";
 
 export default {
   state: {
@@ -9,7 +9,7 @@ export default {
     loadTodos(state, payload) {
       state.todos = payload;
     },
-    onTodoAdd(state, payload) {
+    todoAdd(state, payload) {
       state.todos.push(payload);
     }
   },
@@ -21,9 +21,6 @@ export default {
      * @returns {Void}
      */
     async loadTodos({ commit }, uid) {
-      commit("clearError");
-      commit("setIsLoading", true);
-
       try {
         const arrTodos = [];
 
@@ -41,11 +38,8 @@ export default {
           });
 
         commit("loadTodos", arrTodos);
-
-        commit("setIsLoading", false);
       } catch (error) {
-        commit("setIsLoading", false);
-        commit("setIsError", error.message);
+        console.log(error.message);
         throw error;
       }
     },
@@ -54,18 +48,13 @@ export default {
      * @param {*} payload - добавляемое todo
      */
     async addTodo({ commit }, payload) {
-      commit("clearError");
-      commit("setIsLoading", true);
-
       try {
         const todo = await db.collection("todos").add(payload);
         payload.id = todo.id;
 
-        commit("onTodoAdd", payload);
-        commit("setIsLoading", false);
+        commit("todoAdd", payload);
       } catch (error) {
-        commit("setIsLoading", false);
-        commit("setIsError", error.message);
+        console.log(error.message);
         throw error;
       }
     },
@@ -74,10 +63,7 @@ export default {
      * Функция удаления todo
      * @param {*} todoId - id удаляемого todo
      */
-    async deleteTodo({ commit }, todoId) {
-      commit("clearError");
-      commit("setIsLoading", true);
-
+    async deleteTodo(state, todoId) {
       try {
         await db
           .collection("todos")
@@ -86,11 +72,8 @@ export default {
           .catch(error => {
             console.error("Error removing document: ", error);
           });
-
-        commit("setIsLoading", false);
       } catch (error) {
-        commit("setIsLoading", false);
-        commit("setIsError", error.message);
+        console.log(error.message);
         throw error;
       }
     },
@@ -99,10 +82,7 @@ export default {
      * Функция закрытия todo
      * @param {Object} payload - id и статус состояния todo (закрываем todo или повторно открываем todo)
      */
-    async closeTodo({ commit }, payload) {
-      commit("clearError");
-      commit("setIsLoading", true);
-
+    async closeTodo(state, payload) {
       try {
         await db
           .collection("todos")
@@ -113,10 +93,8 @@ export default {
             },
             { merge: true }
           );
-        commit("setIsLoading", false);
       } catch (error) {
-        commit("setIsLoading", false);
-        commit("setIsError", error.message);
+        console.log(error.message);
         throw error;
       }
     },
@@ -125,20 +103,14 @@ export default {
      * Функция изменения данных todo
      * @param {Object} todo - измененное todo
      */
-    async editTodo({ commit }, todo) {
-      commit("clearError");
-      commit("setIsLoading", true);
-
+    async editTodo(state, todo) {
       try {
         await db
           .collection("todos")
           .doc(todo.id)
           .set(todo, { merge: true });
-
-        commit("setIsLoading", true);
       } catch (error) {
-        commit("setIsLoading", false);
-        commit("setIsError", error.message);
+        console.log(error.message);
         throw error;
       }
     }
