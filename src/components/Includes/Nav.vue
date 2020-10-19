@@ -1,7 +1,7 @@
 <!-- Компонент навигации приложения -->
 
 <template>
-  <nav class="navbar fixed-top" :class="{ 'shadow-sm bg-white': isAutorized }">
+  <nav class="navbar fixed-top" :class="{ active: isAutorized }">
     <div class="navbar-brand">
       <img
         src="@/assets/images/logo.png"
@@ -61,16 +61,47 @@ nav {
     color: #3f50e7;
   }
 
-  .nav-title {
-    margin: 0 12px 0 20px;
+  .navbar-brand {
+    display: flex;
+    align-items: center;
+
+    .nav-title {
+      margin: 0 12px 0 20px;
+      font-size: 30px;
+    }
+
+    .nav-tag {
+      display: inline-block;
+      padding: 3px 10px;
+      background: #eff0f3;
+      border-radius: 2px;
+      font-size: 12px;
+    }
   }
 
-  .nav-tag {
-    display: inline-block;
-    padding: 3px 10px;
-    background: #eff0f3;
-    border-radius: 2px;
-    font-size: 12px;
+  .btn {
+    font-size: 20px;
+    padding: 8px 24px;
+    border-radius: 5px;
+  }
+
+  &.active {
+    background: #fff;
+    box-shadow: 0px 15px 25px rgba(154, 160, 189, 0.1);
+  }
+}
+
+@media (max-width: 768px) {
+  nav {
+    .navbar-brand {
+      .nav-title {
+        margin: 0 10px;
+        font-size: 20px;
+      }
+    }
+    .btn {
+      font-size: 15px;
+    }
   }
 }
 </style>

@@ -166,6 +166,7 @@ export default {
 
       .card-title {
         color: #333;
+        font-size: 25px;
       }
     }
 
@@ -206,6 +207,10 @@ export default {
 
       .title-cont {
         margin: 0;
+
+        .card-title {
+          font-size: 20px;
+        }
       }
     }
 

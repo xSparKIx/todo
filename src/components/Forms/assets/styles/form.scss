@@ -5,6 +5,7 @@
   
     h2 {
       margin: 10px 0 75px 0;
+      font-size: 40px;
     }
   
     .form-group {
@@ -23,6 +24,7 @@
         height: 75px;
         background-color: #f6f7fa;
         border: none;
+        border-radius: 10px;
   
         &.is-valid {
           border: none;
@@ -42,6 +44,7 @@
       height: 75px;
       border: none;
       background: linear-gradient(90deg, #61de6e 0%, #6df77a 100%);
+      font-size: 25px;
     }
   
     p {
@@ -64,6 +67,7 @@
   
       h2 {
         margin: 0 0 40px 0;
+        font-size: 25px;
       }
   
       .form-group {
@@ -76,6 +80,7 @@
   
       .btn {
         height: 50px;
+        font-size: 17px;
       }
   
       p {
@@ -94,6 +99,27 @@
         .btn {
           margin: 10px 0 0 0;
         }
+      }
+    }
+  }
+
+  @media (max-height: 768px) {
+    .form-container {
+      h2 {
+        margin: 0 0 30px 0;
+      }
+      .form-group {
+        margin: 0 0 15px 0;
+        
+        label {
+          margin: 0 0 15px 0;
+        }
+      }
+      .btn {
+        margin: 10px 0 0 0;
+      }
+      p {
+        margin: 25px 0 5px 0;
       }
     }
   }

@@ -2,7 +2,7 @@
 
 <template>
   <section id="todo-top-sec" class="project-container">
-    <div class="jumbotron bg-transparent mt-5 px-0 pb-0">
+    <div class="jumbotron bg-transparent px-0 pb-0">
       <p class="sub-header">Проект: <u>Разработка приложения</u></p>
 
       <div
@@ -107,7 +107,7 @@ export default {
         name: "New Todo",
         description: "Todo description",
         closed: false,
-        color: null
+        color: "#000000"
       };
 
       this.$store.dispatch("addTodo", todo);
@@ -118,54 +118,66 @@ export default {
 
 <style lang="scss">
 #todo-top-sec {
-  h1 {
-    color: #3f50e7;
-    font-weight: 400;
-    font-size: 60px;
-    margin: 0;
-  }
+  .jumbotron {
+    margin: 75px 0 0 0;
 
-  .change-view {
-    margin: 0 10px;
+    h1 {
+      color: #3f50e7;
+      font-weight: 400;
+      font-size: 60px;
+      margin: 0;
+    }
 
-    svg,
-    path {
+    .change-view {
+      margin: 0 10px;
+
+      svg,
+      path {
+        color: #b3b6c5;
+        font-size: 20px;
+      }
+
+      &.active {
+        svg,
+        path {
+          color: #3f50e7;
+        }
+      }
+    }
+
+    .active-buttons {
+      width: 40px;
+      height: 40px;
+      margin: 0 0 0 40px;
+    }
+
+    .sub-header,
+    .sub-header u {
       color: #b3b6c5;
+      margin: 0 0 30px 0;
       font-size: 20px;
     }
 
-    &.active {
-      svg,
-      path {
-        color: #3f50e7;
-      }
+    hr {
+      margin: 40px 0 65px 0;
     }
-  }
-
-  .active-buttons {
-    width: 40px;
-    height: 40px;
-    margin: 0 0 0 40px;
-  }
-
-  .sub-header,
-  .sub-header u {
-    color: #b3b6c5;
-    margin: 0 0 30px 0;
-  }
-
-  hr {
-    margin: 40px 0 65px 0;
   }
 }
 
 @media (max-width: 768px) {
   #todo-top-sec {
-    h1 {
-      margin: 0 0 40px 0;
-    }
-    .active-buttons {
-      margin: 0 20px 0 0;
+    .jumbotron {
+      h1 {
+        margin: 0 0 40px 0;
+        font-size: 40px;
+      }
+      .sub-header,
+      .sub-header u {
+        font-size: 15px;
+      }
+      .active-buttons {
+        margin: 0 20px 0 0;
+      }
     }
   }
 }
