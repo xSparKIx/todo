@@ -4,7 +4,9 @@
   <section id="todo-list" class="project-container pb-5">
     <div
       class="row row-cols-1 g-4"
-      :class="[inColumn ? 'row-cols-md-4' : 'compact']"
+      :class="[
+        inColumn ? 'row-cols-sm-2 row-cols-lg-3 row-cols-xl-4' : 'compact'
+      ]"
     >
       <TodoItem
         v-for="todo in todos"
