@@ -55,6 +55,7 @@
           <button
             class="active-buttons btn btn-primary d-inline-flex justify-content-center align-items-center rounded-circle bg-gradient"
             @click="addTodo"
+            v-if="isAutorized"
           >
             <svg
               width="16"
@@ -84,6 +85,17 @@ export default {
     return {
       isColumn: true
     };
+  },
+
+  computed: {
+    /**
+     * Проверка авторизирован ли пользователь
+     * @param {}
+     * @returns {Boolean} - статус авторизации пользователя
+     */
+    isAutorized() {
+      return this.$store.getters.CHECK_USER;
+    }
   },
 
   methods: {
