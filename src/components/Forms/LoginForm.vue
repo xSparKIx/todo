@@ -127,10 +127,12 @@ export default {
         password: this.password
       };
 
+      this.error = null;
+
       this.$store
         .dispatch("loginUser", user)
         .then(() => {
-          this.$router.push("/");
+          !this.error && this.$router.push("/");
         })
         .catch(error => {
           this.error = error.code;

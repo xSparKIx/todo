@@ -151,13 +151,15 @@ export default {
         password: this.password
       };
 
+      this.error = null;
+
       this.$store
         .dispatch("registerUser", user)
         .catch(error => {
           this.error = error.code;
         })
         .then(() => {
-          this.$router.push("/");
+          !this.error && this.$router.push("/");
         });
     },
 
