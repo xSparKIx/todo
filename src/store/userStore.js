@@ -16,7 +16,7 @@ export default {
     /**
      * Функция регистрации пользователя
      * @param {Object} {} - Объект, содержащий email, пароль и имя пользователя
-     * @returns {void}
+     * @returns {Void}
      */
     async registerUser({ commit, dispatch }, { name, email, password }) {
       try {
@@ -38,7 +38,7 @@ export default {
     /**
      * Функция авторизации пользователя
      * @param {Object} {} - Объект, содержащий email и пароль пользователя
-     * @returns  {void}
+     * @returns  {Void}
      */
     async loginUser({ commit, dispatch }, { email, password }) {
       try {
@@ -57,7 +57,7 @@ export default {
     /**
      * Функция авторизации пользователя после повторного входа
      * @param {Object} payload - Объект, содержащий email и пароль пользователя
-     * @returns  {void}
+     * @returns  {Void}
      */
     logUser({ commit }, payload) {
       commit("userSet", new User(payload.uid));
@@ -65,7 +65,7 @@ export default {
 
     /**
      * Функция деавторизации пользователя
-     * @returns {void}
+     * @returns {Void}
      */
     logoutUser({ commit }) {
       firebase.auth().signOut();
