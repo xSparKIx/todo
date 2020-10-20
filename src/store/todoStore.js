@@ -20,7 +20,7 @@ export default {
      * @param {String} uid - id пользователя, для которого загружаем todo
      * @returns {Void}
      */
-    async loadTodos({ commit }, uid) {
+    async loadTodos({ commit, dispatch }, uid) {
       try {
         const arrTodos = [];
 
@@ -39,23 +39,21 @@ export default {
 
         commit("loadTodos", arrTodos);
       } catch (error) {
-        console.log(error.message);
-        throw error;
+        dispatch("showError", error);
       }
     },
     /**
      * Функция добавления todo
      * @param {*} payload - добавляемое todo
      */
-    async addTodo({ commit }, payload) {
+    async addTodo({ commit, dispatch }, payload) {
       try {
         const todo = await db.collection("todos").add(payload);
         payload.id = todo.id;
 
         commit("todoAdd", payload);
       } catch (error) {
-        console.log(error.message);
-        throw error;
+        dispatch("showError", error);
       }
     },
 
@@ -63,7 +61,7 @@ export default {
      * Функция удаления todo
      * @param {*} todoId - id удаляемого todo
      */
-    async deleteTodo(state, todoId) {
+    async deleteTodo({ dispatch }, todoId) {
       try {
         await db
           .collection("todos")
@@ -73,8 +71,7 @@ export default {
             console.error("Error removing document: ", error);
           });
       } catch (error) {
-        console.log(error.message);
-        throw error;
+        dispatch("showError", error);
       }
     },
 
@@ -82,7 +79,7 @@ export default {
      * Функция закрытия todo
      * @param {Object} payload - id и статус состояния todo (закрываем todo или повторно открываем todo)
      */
-    async closeTodo(state, payload) {
+    async closeTodo({ dispatch }, payload) {
       try {
         await db
           .collection("todos")
@@ -94,8 +91,7 @@ export default {
             { merge: true }
           );
       } catch (error) {
-        console.log(error.message);
-        throw error;
+        dispatch("showError", error);
       }
     },
 
@@ -103,15 +99,14 @@ export default {
      * Функция изменения данных todo
      * @param {Object} todo - измененное todo
      */
-    async editTodo(state, todo) {
+    async editTodo({ dispatch }, todo) {
       try {
         await db
           .collection("todos")
           .doc(todo.id)
           .set(todo, { merge: true });
       } catch (error) {
-        console.log(error.message);
-        throw error;
+        dispatch("showError", error);
       }
     }
   },

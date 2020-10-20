@@ -6,7 +6,17 @@ import todoStore from "./todoStore";
 export default createStore({
   state: {},
   mutations: {},
-  actions: {},
+  actions: {
+    /**
+     * Функция показа ошибки
+     * @param {Object} error - ошибка пришедшая с сервера
+     * @returns {void}
+     */
+    showError(state, error) {
+      console.log(error.message);
+      throw error;
+    }
+  },
   modules: {
     userStore,
     todoStore

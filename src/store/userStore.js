@@ -15,10 +15,10 @@ export default {
   actions: {
     /**
      * Функция регистрации пользователя
-     * @param {Object} {} - Объект, содержащий email , пароль и имя пользователя
+     * @param {Object} {} - Объект, содержащий email, пароль и имя пользователя
      * @returns {void}
      */
-    async registerUser({ commit }, { name, email, password }) {
+    async registerUser({ commit, dispatch }, { name, email, password }) {
       try {
         await firebase
           .auth()
@@ -31,8 +31,7 @@ export default {
             localStorage.setItem("user-uid", result.user.uid);
           });
       } catch (error) {
-        console.log(error.message);
-        throw error;
+        dispatch("showError", error);
       }
     },
 
@@ -41,7 +40,7 @@ export default {
      * @param {Object} {} - Объект, содержащий email и пароль пользователя
      * @returns  {void}
      */
-    async loginUser({ commit }, { email, password }) {
+    async loginUser({ commit, dispatch }, { email, password }) {
       try {
         await firebase
           .auth()
@@ -51,8 +50,7 @@ export default {
             localStorage.setItem("user-uid", user.user.uid);
           });
       } catch (error) {
-        console.log(error.message);
-        throw error;
+        dispatch("showError", error);
       }
     },
 
