@@ -10,7 +10,7 @@ export default createStore({
     /**
      * Функция показа ошибки
      * @param {Object} error - ошибка пришедшая с сервера
-     * @returns {void}
+     * @returns {Void}
      */
     showError(state, error) {
       console.log(error.message);
