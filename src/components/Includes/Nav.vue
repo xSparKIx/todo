@@ -42,7 +42,7 @@ export default {
     /**
      *  Функция выхода из учетной записи.
      *  @param {}
-     *  @returns {void}
+     *  @returns {Void}
      */
     logout() {
       this.$store.dispatch("logoutUser");

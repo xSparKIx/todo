@@ -111,7 +111,7 @@ export default {
 
     /**
      * Функция добавления нового todo
-     * @returns {void}
+     * @returns {Void}
      */
     addTodo() {
       const todo = {

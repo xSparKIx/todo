@@ -17,7 +17,7 @@ export default {
     /**
      * Авторизация пользователя после повторного входа
      * @param {}
-     * @returns {void}
+     * @returns {Void}
      */
     firebase.auth().onAuthStateChanged(user => {
       if (user) {

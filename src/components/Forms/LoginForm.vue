@@ -141,7 +141,7 @@ export default {
     /**
      * Событие отправки формы авторизации
      * @param {}
-     * @returns {void}
+     * @returns {Void}
      */
     onSubmit() {
       const user = {
