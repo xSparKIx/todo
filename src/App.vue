@@ -89,13 +89,14 @@ body {
     border-left: 7px solid transparent;
     border-right: 7px solid transparent;
     border-bottom: 10px solid #fff;
-    right: 17px;
+    right: 27px;
   }
 
   &::after {
     content: attr(data-tooltip);
     z-index: 2;
     width: 320px;
+    max-width: 100%;
     right: -250px;
     background: #fff;
     border-radius: 15px;
@@ -125,6 +126,24 @@ body {
   [data-tooltip] {
     &::after {
       right: 0;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  [data-tooltip] {
+    &::before {
+      right: 18px;
+    }
+
+    &:hover {
+      &::before {
+        transform: translateY(40px);
+      }
+
+      &::after {
+        transform: translateY(50px);
+      }
     }
   }
 }

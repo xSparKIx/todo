@@ -11,6 +11,7 @@
           >E-mail</label
         >
         <div
+          class="input-grp"
           :data-tooltip="
             incorrectEmail ? 'Корректно заполните обязательные поля.' : null
           "
@@ -27,6 +28,16 @@
             aria-describedby="emailHelp"
             @change="onInputChange"
           />
+          <img
+            v-if="!incorrectEmail && incorrectEmail !== null"
+            src="./assets/images/valid.svg"
+            alt="Valid Logo"
+          />
+          <img
+            v-if="incorrectEmail"
+            src="./assets/images/warn.svg"
+            alt="Warn Logo"
+          />
         </div>
       </div>
       <div class="form-group">
@@ -36,6 +47,7 @@
           >Пароль</label
         >
         <div
+          class="input-grp"
           :data-tooltip="
             incorrectPassword
               ? 'Your password must be at least 6 characters long and must contain letters, numbers and special characters. Cannot contain whitespace.'
@@ -52,6 +64,16 @@
             ]"
             id="exampleInputPassword1"
             @change="onInputChange"
+          />
+          <img
+            v-if="!incorrectPassword && incorrectPassword !== null"
+            src="./assets/images/valid.svg"
+            alt="Valid Logo"
+          />
+          <img
+            v-if="incorrectPassword"
+            src="./assets/images/warn.svg"
+            alt="Warn Logo"
           />
         </div>
       </div>

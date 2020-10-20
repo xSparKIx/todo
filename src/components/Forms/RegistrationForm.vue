@@ -5,8 +5,11 @@
     <h2>Регистрация</h2>
     <form @submit.prevent="onSubmit">
       <div class="form-group">
-        <label for="exampleInputName1">Имя</label>
+        <label for="exampleInputName1" :class="{ 'is-invalid': incorrectName }"
+          >Имя</label
+        >
         <div
+          class="input-grp"
           :data-tooltip="
             incorrectName ? 'Корректно заполните обязательные поля.' : null
           "
@@ -22,11 +25,26 @@
             id="exampleInputName1"
             @change="onInputChange"
           />
+          <img
+            v-if="!incorrectName && incorrectName !== null"
+            src="./assets/images/valid.svg"
+            alt="Valid Logo"
+          />
+          <img
+            v-if="incorrectName"
+            src="./assets/images/warn.svg"
+            alt="Warn Logo"
+          />
         </div>
       </div>
       <div class="form-group">
-        <label for="exampleInputEmail1">E-mail</label>
+        <label
+          for="exampleInputEmail1"
+          :class="{ 'is-invalid': incorrectEmail }"
+          >E-mail</label
+        >
         <div
+          class="input-grp"
           :data-tooltip="
             incorrectEmail ? 'Корректно заполните обязательные поля.' : null
           "
@@ -43,11 +61,26 @@
             aria-describedby="emailHelp"
             @change="onInputChange"
           />
+          <img
+            v-if="!incorrectEmail && incorrectEmail !== null"
+            src="./assets/images/valid.svg"
+            alt="Valid Logo"
+          />
+          <img
+            v-if="incorrectEmail"
+            src="./assets/images/warn.svg"
+            alt="Warn Logo"
+          />
         </div>
       </div>
       <div class="form-group">
-        <label for="exampleInputPassword1">Пароль</label>
+        <label
+          for="exampleInputPassword1"
+          :class="{ 'is-invalid': incorrectPassword }"
+          >Пароль</label
+        >
         <div
+          class="input-grp"
           :data-tooltip="
             incorrectPassword
               ? 'Your password must be at least 6 characters long and must contain letters, numbers and special characters. Cannot contain whitespace.'
@@ -66,6 +99,16 @@
             ]"
             id="exampleInputPassword1"
             @change="onInputChange"
+          />
+          <img
+            v-if="!incorrectPassword && incorrectPassword !== null"
+            src="./assets/images/valid.svg"
+            alt="Valid Logo"
+          />
+          <img
+            v-if="incorrectPassword"
+            src="./assets/images/warn.svg"
+            alt="Warn Logo"
           />
         </div>
       </div>
